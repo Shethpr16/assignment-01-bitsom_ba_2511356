@@ -11,7 +11,7 @@ touch part5-datalake/{duckdb_queries.sql,architecture_choice.md} && \
 touch part6-capstone/{architecture_diagram.png,design_justification.md} && \
 git init && \
 git branch -M main && \
-git remote add origin https://github.com/your-username/assignment-01-bitsom_ba_2511356.git && \
+git remote add origin https://github.com/shethpr16/assignment-01-bitsom_ba_2511356.git && \
 git add . && \
 git commit -m "Initial assignment structure" && \
 git push -u origin main
