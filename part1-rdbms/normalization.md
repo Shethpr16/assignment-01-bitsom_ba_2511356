@@ -29,14 +29,12 @@
 
 ## Normalization Justification
 
-At first glance, storing all information in a single table such as orders_flat.csv appears simpler. However, this design introduces significant data quality and maintenance problems.
+While keeping all information in a single table such as `orders_flat.csv` may appear simpler at first, the dataset clearly shows that this approach creates serious data quality and maintenance problems rather than reducing complexity.
 
-The dataset clearly demonstrates update anomalies. Sales representative office addresses and customer details are repeated across multiple rows. For example, the office address of Deepak Joshi appears with different spellings in different orders. If the office address changes, every related row must be updated, increasing the risk of inconsistency.
+One major issue is **update anomalies** caused by repeated data. For example, the sales representative **Deepak Joshi (SR01)** appears in many orders, but his office address is stored with inconsistent spellings such as “Mumbai HQ, Nariman Point, Mumbai - 400021” and “Mumbai HQ, Nariman Pt, Mumbai - 400021.” Because the same information is duplicated across multiple rows, correcting or updating the address requires changing many records, increasing the risk of inconsistencies.
 
-Insert anomalies also exist. Product information such as product name, category, and price is only available when an order is placed. This makes it impossible to add new products to the system unless a dummy order is created, which is not a valid business process.
+The dataset also demonstrates **insert anomalies**. Product details like `product_name`, `category`, and `unit_price` exist only within order rows. As a result, a new product cannot be added to the system unless an order is created for it. For instance, the product **Webcam (P008)** appears only because it is associated with order **ORD1185**. This prevents the business from maintaining a clean product catalog independent of sales activity.
 
-Delete anomalies are equally problematic. If an order is removed, important information about customers or products may be lost entirely. For instance, deleting the only order containing a specific product would erase all records of that product.
+Additionally, **delete anomalies** pose a serious risk. If an order is deleted—such as cancelling **ORD1185**—the only record of product **P008 (Webcam)** would be lost entirely. This unintended data loss makes the system unreliable.
 
-Normalizing the data to Third Normal Form resolves these issues by separating customers, products, sales representatives, and orders into independent tables. Each fact is stored once and referenced using foreign keys. This approach improves data integrity, supports safe updates and deletions, and allows the business to scale operations without introducing inconsistencies.
-
-Therefore, normalization is not over‑engineering in this case; it is essential for maintaining accurate, reliable, and scalable data systems.
+Normalizing the data into separate tables for customers, products, sales representatives, orders, and order items resolves these issues. Each fact is stored once and referenced through keys, improving data integrity, flexibility, and scalability. In this context, normalization is not over‑engineering; it is essential for accurate, maintainable, and trustworthy data management.
